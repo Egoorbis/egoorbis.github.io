@@ -89,7 +89,7 @@ Now let's take a look at the main.bicep file. As you can see at the very beginni
 As descirbed above, the Cloud Shell has a specifc tag requirement. We use the union array function of Bicep in order to combine multiple tag sources together into a single array with all our tags.
 
 
-```bicep
+```
 /*
 Deploy a cloud shell account to management scope
 */
