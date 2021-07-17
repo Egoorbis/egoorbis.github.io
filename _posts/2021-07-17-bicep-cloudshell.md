@@ -12,6 +12,8 @@ classes: wide
 
 In this post I'm describing how you leverage Bicep modules to deploy azure resoruces to multiple subscriptions using a management group scope deployment. I'm showing an example on how to deploy a cloud shell storage account.
 
+All files can be found on my GitHub [IaC repository](https://github.com/Egoorbis/iac/tree/main/bicep/cloudshell).
+
 ## Use case
 Bicep offers several deployment scopes that can be targeted when deploying templates.
 In an Enterprise Scale Szenario usually several core components are deployed centrally, while applications and workloads are deployed directly trough development teams. 
@@ -150,9 +152,14 @@ module csfs_deploy '../modules/storageaccount.fileshare.bicep' = {
 output storageAccountName string = cs_deploy.outputs.storageAccountName
 ```
 
-### Cloud Shell
+### Deploy
+I will create an additional post with a Azure DevOps pipeline setup that has been used. 
+To deploy the template manually use the following syntax:
+
+```az deployment mg create -f main/main.bicep -p parameters/envparameters.json -m %managementGroupID% -l westeurope```
 
 
 :page_facing_up: Sources: 
 * Create Bicep parameter file - https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameter-files
 * Management group deployments with Bicep files - https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-to-management-group?tabs=azure-cli
+* Persist files in Azure Cloud Shell - https://docs.microsoft.com/en-us/azure/cloud-shell/persisting-shell-storage#restrict-resource-creation-with-an-azure-resource-policy
