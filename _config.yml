@@ -16,7 +16,7 @@ timezone: Europe/Zurich
 
 title: Vefiu # the main title
 
-tagline: Welcome to my blog # it will display as the sub-title
+tagline: Welcome to my blog! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A blog about Platform Engineering, Cloud, DevOps, and more.
