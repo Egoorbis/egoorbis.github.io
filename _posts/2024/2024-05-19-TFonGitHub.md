@@ -208,7 +208,7 @@ The final step now is to also test access to the state file and create resources
 
 In your repository, create a new directory called *tf* and create a *main.tf* file in it with the below content. 
 
-![main.tf in VS Code](vscMainTf.png)
+![main.tf in VS Code](/assets/img/posts/2024-05-19-TFonGitHub/vscMainTf.png)
 
 Make sure that the arguments ```use_azuread_auth``` and ```use_oidc``` are configured in the backend block and ```use_oidc``` as well in the provider block.
 
