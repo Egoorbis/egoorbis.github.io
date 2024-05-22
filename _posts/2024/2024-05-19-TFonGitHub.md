@@ -62,7 +62,7 @@ code .
 
 Our repository is now ready for use. 
 
-![VS Code](../../assets/img/posts/2024-05-19-TFonGitHub/vscNewRepository.png)
+![VS Code](/assets/img/posts/2024-05-19-TFonGitHub/vscNewRepository.png)
 
 ## Create a new Entra Application with SPN and federated identity credential
 
@@ -115,7 +115,7 @@ Save the output, as we will need the corresponding IDs later to save them in the
 
 If you now navigate to https://portal.azure.com - **Microsoft Entra ID** - **App registrations**, you will find the created *spn-github-actions*, in which the federated credential is configured under the menu item **Certificates & secrets**.
 
-![SPN Credentials & Secrets](../../assets/img/posts/2024-05-19-TFonGitHub/appRegistration.png)
+![SPN Credentials & Secrets](/assets/img/posts/2024-05-19-TFonGitHub/appRegistration.png)
 
 ## Create the Terraform backend on Azure Storage Account and necessary Role Assignments
 
@@ -176,7 +176,7 @@ Before we start configuring the workflow, we take our outputs from the previous 
 
 To do this, navigate to https://github.com and select your newly created repository. Go to **Settings**, then under **Security** expand the **Secrets and variables** option and then select **Actions**. You now need to add all secrets as shown below:
 
-![Add secret](../../assets/img/posts/2024-05-19-TFonGitHub/ghNewSecret.png)
+![Add secret](/assets/img/posts/2024-05-19-TFonGitHub/ghNewSecret.png)
 
 | Secret Name             | Value                                                                                |
 | ----------------------- | ------------------------------------------------------------------------------------ |
@@ -188,7 +188,7 @@ To do this, navigate to https://github.com and select your newly created reposit
 | BACKEND_CONTAINER_NAME  | Name of the Backend Storage Account Blob Container                                   |
 | BACKEND_KEY             | Name of the State File that will be stored in the Container, e. .g terraform.tfstate |
 
-![Actions secrets and variables](../../assets/img/posts/2024-05-19-TFonGitHub/ghActionsSecrets.png)
+![Actions secrets and variables](/assets/img/posts/2024-05-19-TFonGitHub/ghActionsSecrets.png)
 
 With this we are ready to configure our workflows. 
 
@@ -200,7 +200,7 @@ You can use the example workflow and place it as a *yaml* file in the ```.github
 
 You should see a successful login as part of the *Az CLI Login* step if your run was successful.
 
-![Az Login Test](../../assets/img/posts/2024-05-19-TFonGitHub/ghActionsAzLogin.png)
+![Az Login Test](/assets/img/posts/2024-05-19-TFonGitHub/ghActionsAzLogin.png)
 
 ### Create a GitHub Actions Workflow and run a Terraform test deployment 
 
@@ -238,7 +238,7 @@ resource "azurerm_resource_group" "rg-gha" {
 ```
 With that, we are now ready to create our GitHub Actions workflow that will run our desired Terraform deployment. Create the required directory structure ```*.github/workflows```. In this directory, create a file *workflow.yaml* with the content below. Then push the changes to GitHub.  
 
-![Workflow YAML in VS Code](../../assets/img/posts/2024-05-19-TFonGitHub/vscWorkflowYaml.png)
+![Workflow YAML in VS Code](/assets/img/posts/2024-05-19-TFonGitHub/vscWorkflowYaml.png)
 
 > [!NOTE]
 > For the sake of simplicity, we will push directly to the main branch in this tutorial. In a production environment, you should never push directly to the main branch, but use branch protection and pull requests to merge your changes. 
@@ -319,11 +319,11 @@ jobs:
 
 Under the *Actions* tab of your repository you'll see that the workflow was automatically started.
 
-![GitHub Actions Workflow](../../assets/img/posts/2024-05-19-TFonGitHub/ghActionsWorkflow.png)
+![GitHub Actions Workflow](/assets/img/posts/2024-05-19-TFonGitHub/ghActionsWorkflow.png)
 
 After a successful run, you will see that your resource group has been created in Azure. 
 
-![Azure Resource Group](../../assets/img/posts/2024-05-19-TFonGitHub/azResourceGroup.png)
+![Azure Resource Group](/assets/img/posts/2024-05-19-TFonGitHub/azResourceGroup.png)
 
 ## Wrapping up
 
