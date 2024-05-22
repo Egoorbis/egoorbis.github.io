@@ -6,8 +6,6 @@ tags: [ci/cd]     # TAG names should always be lowercase
 description: In this tutorial, I'll show you how to set up your environment for deploying Infrastructure as Code to Azure using Terraform in GitHub Actions without needing any secrets or keys. We will use OpenID Connect (OIDC) to connect to our Azure subscription and use the Entra ID for authorization against the Terraform backend.
 ---
 
-In this tutorial, I'll show you how to set up your environment for deploying Infrastructure as Code to Azure using Terraform in GitHub Actions without needing any secrets or keys. We will use OpenID Connect (OIDC) to connect to our Azure subscription and use the Entra ID for authorization against the Terraform backend.
-
 ## Prerequisites
 
 To complete this tutorial, you will need the following
