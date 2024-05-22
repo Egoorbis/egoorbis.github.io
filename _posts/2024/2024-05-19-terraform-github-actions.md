@@ -1,8 +1,8 @@
 ---
 title: Configure GitHub Actions to use Terraform with OIDC and Entra ID Authentication
 date: 2024-05-19 08:30:SS +0200
-categories: [Terraform, GitHub Actions]
-tags: [ci/cd]     # TAG names should always be lowercase
+categories: [Infrastructure as Code, Terraform]
+tags: [terraform, github actions]     # TAG names should always be lowercase
 description: In this tutorial, I'll show you how to set up your environment for deploying Infrastructure as Code to Azure using Terraform in GitHub Actions without needing any secrets or keys. We will use OpenID Connect (OIDC) to connect to our Azure subscription and use the Entra ID for authorization against the Terraform backend.
 ---
 
