@@ -16,7 +16,7 @@ timezone: Europe/Zurich
 
 title: vefiu # the main title
 
-tagline: Architecture is based on the three principles of grace/beauty (venustas), stability (firmitas) and utilit (utilitas) - vefiu # it will display as the sub-title
+tagline: Architecture is based on the three principles of grace/beauty (venustas), stability (firmitas) and utility (utilitas) - vefiu # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A blog about Platform Engineering, Cloud, DevOps, and more.
