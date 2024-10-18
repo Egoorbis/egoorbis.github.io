@@ -414,7 +414,7 @@ Make Sure `cilium-operator` and `hubble-relay` are running.
 
     This command will wait until Cilium is fully operational and report its status. The output should look as below:
 
-    ![Cilium Status](/assets/img/posts/2024-05-10-aks-byocni-cilium/ciliumSttus.png)
+    ![Cilium Status](/assets/img/posts/2024-05-10-aks-byocni-cilium/ciliumStatus.png)
 
 **Connectivity Test (Optional):**
 
