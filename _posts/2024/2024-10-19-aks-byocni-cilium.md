@@ -25,8 +25,8 @@ Microsoft offers a streamlined option, Azure CNI Powered by Cilium<sup>[3](#sour
 
 In this blog post, we'll embark on building a custom AKS cluster with Cilium using Terraform and Helm. This powerful combination empowers you to craft a network configuration tailored precisely to your needs.
 
-> :memo: **Note:** 
-This blog post will focus on using the OSS (Open Source Software) version of Cilium for deploying a custom AKS cluster.
+> **Note:** This blog post will focus on using the OSS (Open Source Software) version of Cilium for deploying a custom AKS cluster.
+ {: .prompt-info }
 
 # Setting Up Your Toolkit
 
@@ -43,7 +43,6 @@ Since we'll be enabling Entra ID authentication for our AKS cluster and disablin
 **Alternative Installation Methods:**
 
 Both the Cilium CLI and `kubelogin` can also be installed using package managers like Chocolatey or `winget`. If you prefer using these methods, refer to their respective documentation for installation instructions.
-
 
 # Preparing the Terraform Configuration
 
@@ -316,7 +315,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 The final step is to deploy Cilium to our AKS cluster. We'll accomplish this using a Helm release, which provides a streamlined way to install and manage applications on Kubernetes. For detailed configuration options, consult the Cilium documentation or the Cilium package documentation<sup>[7](#sources)</sup>.
 
-> :warning: **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod CIDR that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
+> **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod CIDR that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
+. {: .prompt-warning }
 
 ```terraform
 resource "helm_release" "cilium" {
@@ -353,7 +353,8 @@ Make sure `cilium-operator` and `hubble-relay` are running.
 
 ![Portal AKS Workloads](/assets/img/posts/2024-05-10-aks-byocni-cilium/portalAksWorkloads.png)
 
-> :memo: **Note:** You'll notice on the Azure portal that your AKS cluster is automatically scaling to at least two nodes. This is because Cilium requires a minimum of two nodes to handle failover and redundancy, which is crucial for maintaining network stability and reliability.
+> **Note:** You'll notice on the Azure portal that your AKS cluster is automatically scaling to at least two nodes. This is because Cilium requires a minimum of two nodes to handle failover and redundancy, which is crucial for maintaining network stability and reliability.
+ {: .prompt-info }
 
 ![Portal AKS Node Pools](/assets/img/posts/2024-05-10-aks-byocni-cilium/portalAksNodePools.png)
 
