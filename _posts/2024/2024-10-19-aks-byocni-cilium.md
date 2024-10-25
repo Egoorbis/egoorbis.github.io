@@ -12,8 +12,8 @@ description: Want to take full control of your AKS networking and leverage the a
 * **Basic Knowledge of Terraform:** Familiarity with Terraform's syntax, modules, and state management is essential for this tutorial. If you're new to Terraform, consider going through the official documentation or online tutorials to get started<sup>[1](#sources)</sup>.
 * **Tooling:** You'll need an Integrated Development Environment (IDE) like Visual Studio Code or IntelliJ IDEA, along with the Azure CLI and Terraform to manage your code and interact with cloud resources.
 
-> :memo: **Note:** 
-All the code used in this article is available on [GitHub](https://github.com/Egoorbis/terraform-gh/tree/main/aks_byocni_cilium). 
+> **Note:** All the code used in this article is available on [GitHub](https://github.com/Egoorbis/terraform-gh/tree/main/aks_byocni_cilium). 
+{: .prompt-info }
 
 # Introduction
 
