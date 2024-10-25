@@ -1,48 +1,55 @@
 ---
-title: Deploying a BYO-CNI Cilium-Powered AKS Cluster with Terraform
-date: 2024-10-19 08:30:SS +0200 # Updater
+title: Deploying a Cilium-Powered BYO-CNI AKS Cluster with Terraform
+date: 2024-10-25 20:00:00 +0200 # Updater
 categories: [AKS]
 tags: [terraform, aks, helm, cilium]     # TAG names should always be lowercase
 description: Want to take full control of your AKS networking and leverage the advanced features of Cilium? This tutorial will walk you through the process of deploying a custom Cilium-powered AKS cluster using Terraform. By bringing your own CNI (BYO-CNI), you gain the flexibility to customize your networking and fine-tune your cluster's behavior. I'll guide you through the steps of setting up Cilium as the CNI provider by leveraging Terraform's and Helm's power to automate the deployment process. 
 ---
 
-## Prerequisites
+# Prerequisites
 
 * **Azure Subscription:** You'll need an active Azure subscription to create and manage the AKS cluster.
 * **Basic Knowledge of Terraform:** Familiarity with Terraform's syntax, modules, and state management is essential for this tutorial. If you're new to Terraform, consider going through the official documentation or online tutorials to get started<sup>[1](#sources)</sup>.
 * **Tooling:** You'll need an Integrated Development Environment (IDE) like Visual Studio Code or IntelliJ IDEA, along with the Azure CLI and Terraform to manage your code and interact with cloud resources.
 
-## Introduction
+The code is available on [github]() 
+
+# Introduction
 
 Azure Kubernetes Service (AKS) offers a wide range of networking options through various Container Networking Interface (CNI) plugins. Each plugin caters to specific needs and comes with its own set of features. For a detailed breakdown of these options, refer to the official documentation<sup>[2](#sources)</sup>.
 
-While AKS offers built-in solutions, you can also bring your own CNI (BYO-CNI) to leverage advanced functionalities. One such powerful CNI is Cilium. Microsoft offers a pre-configured version, Azure CNI Powered by Cilium, which combines the familiar Azure CNI with selected Cilium features<sup>[3](#sources)</sup>. While Azure CNI Powered by Cilium offers a good balance of features and ease of use, it does have some limitations. If you require more advanced networking features, then you might consider using the full Calico implementation as a BYO-CNI. Calico provides a comprehensive set of networking and security features that can be tailored to meet demanding requirements.
+While Azure Kubernetes Service (AKS) offers built-in CNI solutions, you have the freedom to bring your own CNI (BYO-CNI) to unlock advanced networking capabilities. Cilium is one such powerful CNI, renowned for its robust features and performance.
 
-Let's dive into building a custom AKS cluster with Cilium using Terraform and Helm. This powerful combination will give you the flexibility to tailor your network configuration to meet your exact needs.
+Microsoft offers a streamlined option, Azure CNI Powered by Cilium<sup>[3](#sources)</sup>, which blends the familiar Azure CNI with select Cilium features. This provides a good balance of functionality and ease of use. However, for those seeking maximum flexibility and control, deploying the full Cilium as a BYO-CNI is the way to go.
 
-> [!NOTE] 
-> This blog post will focus on using the OSS (Open Source Software) version of Cilium for deploying a custom AKS cluster.
+In this blog post, we'll embark on building a custom AKS cluster with Cilium using Terraform and Helm. This powerful combination empowers you to craft a network configuration tailored precisely to your needs.
 
-## Installing tooling
+> :memo: **Note:** 
+This blog post will focus on using the OSS (Open Source Software) version of Cilium for deploying a custom AKS cluster.
 
-Before we begin, make sure you have the following tools installed:
+# Setting Up Your Toolkit
 
-### Cilium CLI
+Before we dive into the deployment, let's ensure we have the necessary tools in place.
 
-While not required for deployment, we will the Cilium CLI later to validate your Cilium installation within the cluster. You can install it from the official releases on GitHub<sup>[4](#sources)</sup>.
+## Cilium CLI
 
-### Kubelogin
+The Cilium CLI is a valuable tool for interacting with and monitoring your Cilium installation within the cluster. You can download it from the official releases on GitHub<sup>[4](#sources)</sup>.
 
-Kubelogin is required to interact with an Entra ID enabled cluster and hence essential for the usage of the Helm provider. You can download Kubelogin from the Kubelogin GitHub page<sup>[5](#sources)</sup>.
+## Kubelogin
 
-You can also install these tools using package managers like Chocolatey or winget.
+Since we'll be enabling Entra ID authentication for our AKS cluster and disabling local accounts, we'll need `kubelogin` to authenticate with the cluster when using Helm. You can download `kubelogin` from the official Kubernetes releases page<sup>[5](#sources)</sup>.
 
-## Preparing the Terraform Configuration
+**Alternative Installation Methods:**
+
+Both the Cilium CLI and `kubelogin` can also be installed using package managers like Chocolatey or `winget`. If you prefer using these methods, refer to their respective documentation for installation instructions.
+
+
+# Preparing the Terraform Configuration
 
 Let's set up our Terraform configuration. Create a new directory and a `data.tf` file to define the necessary data sources. This file will fetch essential information for our deployment. Here's what we'll include:
 
 * **`azurerm_client_config`:** Retrieves your Azure client configuration, including your tenant and subscription IDs, for proper authentication.
-* **`azuread_service_principal`:** Retrieves information about the Azure Active Directory Service Principal associated with the Azure Kubernetes Service AAD Server. This is crucial for `kubelogin` authentication to the cluster.
+* **`azuread_service_principal`:** Retrieves information about the Entra ID Service Principal associated with the Azure Kubernetes Service AAD Server. This is crucial for `kubelogin` authentication to the cluster.
 * **`azurerm_kubernetes_cluster`:** Fetches details about your AKS cluster. We'll use this information later to interact with the cluster when deploying Cilium through Helm.
 
 ```terraform
@@ -61,7 +68,7 @@ data "azurerm_kubernetes_cluster" "aks" {
 Next, create a `providers.tf` file to configure the Terraform providers:
 
 * * **`azurerm`:** Allows Terraform to deploy Azure resources.
-* * **`helm`:** Allows Terraform to manage Helm charts for deploying applications to our AKS cluster. We'll use this to install Cilium. The provider uses kubelogin to obtain an access token for the cluster, referencing data sources and a service principal that we'll create during our deployment.
+* * **`helm`:** Allows Terraform to manage Helm charts for deploying applications to our AKS cluster. We'll use this to install Cilium. The provider uses `kubelogin` to obtain an access token for the cluster, referencing data sources and a service principal that we'll create during our deployment.
 
 ```terraform 
 
@@ -115,17 +122,17 @@ provider "helm" {
 }
 ```
 
-## Deploying the AKS Cluster and Supporting Resources
+# Deploying the AKS Cluster and Supporting Resources
 
 With our `data.tf` and `providers.tf` files in place, we can now prepare our `main.tf` we'll use to deploy the resources. This includes Entra ID objects, the virtual network, the cluster itself, and a few supporting components.
 
-# Entra ID objects
+## Entra ID objects
 
 Before we create the AKS cluster, let's set up an Entra ID group to manage AKS administrators. This group will be used to enable Entra ID integration for the cluster, allowing us to:
 * **Centralize access control:** Manage cluster access through Entra ID, simplifying user and permission management.
 * **Enhance security:** Disable local accounts within the cluster, ensuring all access is governed by Entra ID.
 
-We'll also create a new service principal for authenticating to the cluster with our Helm provider. Finally, we'll add our user and the service principal to the "aks-admins" Entra ID group.
+We'll also create a new service principal for authenticating to the cluster with our Helm provider. Finally, we'll add our user and the service principal to the `aks-admins` Entra ID group.
 
 ```terraform
 resource "azuread_group" "aks-admins-group" {
@@ -159,7 +166,7 @@ resource "azuread_group_member" "aks-admins" {
 }
 ```
 
-### Resource Group and Naming
+## Resource Group and Naming
 
 We'll use the Azure naming module to generate consistent and unique names for our resources. This helps to avoid naming conflicts and improves the organization of our infrastructure.
 
@@ -174,10 +181,9 @@ resource "azurerm_resource_group" "aks-rg" {
   location = "switzerlandnorth"
 }
 ```
+## Virtual Network 
 
-### Virtual Network 
-
-Next, we'll deploy the network infrastructure for our AKS cluster. This includes network security groups (NSGs) and a virtual network with subnets. To streamline our deployment and ensure best practices, we'll leverage Azure Verified Modules (AVMs) for Terraform. AVMs provide pre-built, tested, and secure modules that significantly reduce the time and effort required to manage infrastructure<sup>[6](#sources)</sup>.
+Next, we'll deploy the network infrastructure for our AKS cluster. This includes network security groups (NSGs) and a virtual network with two subnets. To streamline our deployment and ensure best practices, we'll leverage Azure Verified Modules (AVMs) for Terraform. AVMs provide pre-built, tested, and secure modules that significantly reduce the time and effort required to manage infrastructure<sup>[6](#sources)</sup>.
 
 ```terraform
 module "avm-res-network-networksecuritygroup" {
@@ -216,9 +222,9 @@ module "avm-res-network-virtualnetwork" {
   }
 }
 ```
-### User-Assigned Managed Identity
+## User-Assigned Managed Identity
 
-We'll create a user-assigned managed identity and assign it the "Network Contributor" role. This allows the AKS cluster to manage network resources.
+Next, we'll create a user-assigned managed identity and assign it the "Network Contributor" role. This allows the AKS cluster to manage network resources.
 
 ```terraform
 module "avm-res-managedidentity-userassignedidentity" {
@@ -245,12 +251,11 @@ module "avm-res-authorization-roleassignment" {
 ### AKS 
 Finally, we'll deploy the AKS cluster with below configuration. The key points are: 
 
-* **No Network Profile:** We're explicitly setting network_plugin = "none" in order to configure Cilium in the following section
-* **Entra ID Integration:** We're enabling Entra ID integration and assigning the "aks-admins" group as the administrator group.
-* **User-Assigned Managed Identity:** The cluster is assigned the previously created user-assigned managed identity.
-* **Dependencies:**  The depends_on meta-argument ensures that the role assignment for the managed identity is created before the AKS cluster.
+* **No Network Profile:** We're explicitly setting ?  `network_plugin = "none"` in order to configure Cilium in the following section.
+* **Entra ID Integration:** We're enabling Entra ID integration and assigning the previously declarated `aks-admins` group as the administrator group.
+* **User-Assigned Managed Identity:** The cluster is assigned the previously declarated user-assigned managed identity.
+* **Dependencies:**  The `depends_on` meta-argument ensures that the role assignment for the managed identity is created before the AKS cluster.
 * **Ignore Node Count:** Since we're enabling autoscaling for the node pool, we want Terraform to ignore changes to the `node_count` attribute. This allows the autoscaler to manage the number of nodes based on the workload demands without interference from Terraform.
-  
 
 ```terraform
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -306,13 +311,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 ```
-
-### Deploying Cilium
+# Deploying Cilium
 
 The final step is to deploy Cilium to our AKS cluster. We'll accomplish this using a Helm release, which provides a streamlined way to install and manage applications on Kubernetes. For detailed configuration options, consult the Cilium documentation or the Cilium package documentation<sup>[7](#sources)</sup>.
 
-> [!CAUTION]
-> As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod cidr that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList option`.
+> :warning: **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod cidr that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
 
 ```terraform
 resource "helm_release" "cilium" {
@@ -345,12 +348,11 @@ resource "helm_release" "cilium" {
 
 Now that the AKS cluster is up and running, we need to confirm that Cilium is installed correctly. To do this, you can examine the status of your workloads either through the Azure portal or by connecting directly to the cluster.
 
-Make Sure `cilium-operator` and `hubble-relay` are running. 
+Make sure `cilium-operator` and `hubble-relay` are running. 
 
 ![Portal AKS Workloads](/assets/img/posts/2024-05-10-aks-byocni-cilium/portalAksWorkloads.png)
 
-> [!NOTE]
-> **Automatic Scaling:** You'll notice on the Azure portal that your AKS cluster is automatically scaling to at least two nodes. This is because Cilium requires a minimum of two nodes to handle failover and redundancy, which is crucial for maintaining network stability and reliability.
+> :memo: **Note:** You'll notice on the Azure portal that your AKS cluster is automatically scaling to at least two nodes. This is because Cilium requires a minimum of two nodes to handle failover and redundancy, which is crucial for maintaining network stability and reliability.
 
 ![Portal AKS Node Pools](/assets/img/posts/2024-05-10-aks-byocni-cilium/portalAksNodePools.png)
 
@@ -378,7 +380,7 @@ cilium connectivity test
 
 This command will run various network tests to ensure that pods can communicate with each other and with external services as expected.
 
-Congratulations! You've successfully deployed a Kubernetes cluster with Cilium, providing a robust and secure foundation for your applications. 🎉
+🎉 Congratulations! You've successfully deployed a Kubernetes cluster with Cilium, providing a robust and secure foundation for your applications .
 
 ## Sources
 
