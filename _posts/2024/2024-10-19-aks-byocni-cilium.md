@@ -1,6 +1,6 @@
 ---
 title: Deploying a Cilium-Powered BYO-CNI AKS Cluster with Terraform
-date: 2024-10-25 20:00:00 +0200 # Updater
+date: 2024-10-25 20:00:SS +0200 # Updater
 categories: [AKS]
 tags: [terraform, aks, helm, cilium]     # TAG names should always be lowercase
 description: Want to take full control of your AKS networking and leverage the advanced features of Cilium? This tutorial will walk you through the process of deploying a custom Cilium-powered AKS cluster using Terraform. By bringing your own CNI (BYO-CNI), you gain the flexibility to customize your networking and fine-tune your cluster's behavior. I'll guide you through the steps of setting up Cilium as the CNI provider by leveraging Terraform's and Helm's power to automate the deployment process. 
@@ -315,7 +315,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
 The final step is to deploy Cilium to our AKS cluster. We'll accomplish this using a Helm release, which provides a streamlined way to install and manage applications on Kubernetes. For detailed configuration options, consult the Cilium documentation or the Cilium package documentation<sup>[7](#sources)</sup>.
 
-> :warning: **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod cidr that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
+> :warning: **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod CIDR that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
 
 ```terraform
 resource "helm_release" "cilium" {
