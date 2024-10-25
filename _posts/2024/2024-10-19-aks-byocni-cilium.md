@@ -316,7 +316,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 The final step is to deploy Cilium to our AKS cluster. We'll accomplish this using a Helm release, which provides a streamlined way to install and manage applications on Kubernetes. For detailed configuration options, consult the Cilium documentation or the Cilium package documentation<sup>[7](#sources)</sup>.
 
 > **Warning:** As stated in the Cilium documentation, make sure that you set a cluster pool IPAM pod CIDR that does not overlap with the service CIDR of the AKS through the `ipam.operator.clusterPoolIPv4PodCIDRList` option.
-. {: .prompt-warning }
+{: .prompt-warning }
 
 ```terraform
 resource "helm_release" "cilium" {
@@ -338,7 +338,7 @@ resource "helm_release" "cilium" {
     name  = "ipam.operator.clusterPoolIPv4PodCIDRList"
     value = "192.168.0.0/16"
   }
-  set {
+    set {
     name  = "hubble.relay.enabled"
     value = "true"
   }
