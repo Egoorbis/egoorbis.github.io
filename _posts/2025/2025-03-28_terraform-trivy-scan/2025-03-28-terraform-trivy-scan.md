@@ -1,6 +1,6 @@
 ---
 title: Fortify Your Terraform - Scanning IaC with Trivy and GitLeaks on GitHub Actions
-date: 2025-01-31 08:30:SS +0200
+date: 2025-03-28 20:30:SS +0200
 categories: [Infrastructure as Code, Terraform]
 tags: [terraform, vulnerability-management, github actions, trivy, giteaks]
 description: Secure your Terraform deployments by catching vulnerabilities early. Learn how to integrate Trivy and GitLeaks into your GitHub Actions workflow, enhancing your IaC security posture.
@@ -120,7 +120,7 @@ Let's explore Trivy's versatile options for scanning IaC configurations. I highl
 
 Let's review the step's output to understand the results, which are displayed as follows:
 
-![Run Trivy IaC scan step](assets/trivy-pipeline.png)
+![Run Trivy IaC scan step](/_posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-pipeline.png)
 
 While Trivy detected issues within our code, the output lacks readability. 
 
@@ -171,7 +171,7 @@ Additionally, we'll configure a second Trivy scan to fail only if any High or Cr
 
 The output of this configuration is presented below:
 
-![Trivy GitHub Summary](assets/trivy-github-summary.png)
+![Trivy GitHub Summary](/_posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-github-summary.png)
 
 ## Ignoring Specific Issues
 
@@ -196,7 +196,7 @@ Following the authors recommendation I've integrated GitLeaks my workflow to enh
 
 Surprisingly, the official GitLeaks GitHub Action failed to detect the secrets, reporting no issues, despite local testing successfully detecting the password.
 
-![GitLeaks Action](assets/trivy-gitleaks-actions.png)
+![GitLeaks Action](/_posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-gitleaks-actions.png)
 
  To resolve this discrepancy, I've modified the workflow to manually install GitLeaks, as shown in the following configuration.
 
@@ -235,7 +235,7 @@ Surprisingly, the official GitLeaks GitHub Action failed to detect the secrets, 
 
 As shown in the screenshot below, this time the password was successfully detected.
 
-![GitLeaks Manual](assets/trivy-gitleaks-actions-manual.png)
+![GitLeaks Manual](/_posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-gitleaks-actions-manual.png)
 
 Through the implementation of Trivy and GitLeaks in a GitHub Actions workflow, we have now established robust security our Terraform deployment, encompassing both misconfiguration and secret detection.
 
