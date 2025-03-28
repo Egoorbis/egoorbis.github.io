@@ -2,7 +2,7 @@
 title: Fortify Your Terraform - Scanning IaC with Trivy and GitLeaks on GitHub Actions
 date: 2025-03-28 20:30:SS +0200
 categories: [Infrastructure as Code, Terraform]
-tags: [terraform, vulnerability-management, GitHub actions, trivy, giteaks]
+tags: [terraform, vulnerability-management, github actions, trivy, giteaks]
 description: Secure your Terraform deployments by catching vulnerabilities early. Learn how to integrate Trivy and GitLeaks into your GitHub Actions workflow, enhancing your IaC security posture.
 ---
 
