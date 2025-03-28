@@ -116,11 +116,11 @@ Let's explore Trivy's versatile options for scanning IaC configurations. I highl
 * `exit-code`: Fails the workflow if vulnerabilities are found.
 * `severity`: Sets the severity level to check.
 * `skip-dirs`: Excludes specified directories.
-* `trivyignores`: Specifies a `.trivyignore` file to ignore specific issues by adding the ID (See section [Ignoring Specific Issues](##IgnoringSpecificIssues)).
+* `trivyignores`: Specifies a `.trivyignore` file to ignore specific issues by adding the ID (See section [Ignoring Specific Issues](#ignoring-specific-issues)).
 
 Let's review the step's output to understand the results, which are displayed as follows:
 
-![Run Trivy IaC scan step](/_posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-pipeline.png)
+![Run Trivy Infrastructure as Code scan step](https://egoorbis.github.io/posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-pipeline.png)
 
 While Trivy detected issues within our code, the output lacks readability. 
 
