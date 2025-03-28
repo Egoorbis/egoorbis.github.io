@@ -6,15 +6,9 @@
 - type: twitter
   icon: "fa-brands fa-x-twitter"
 
-<<<<<<< HEAD
 # - type: email
 #   icon: "fas fa-envelope"
 #   noblank: true # open link in current tab
-=======
-- type: email
-  icon: "fas fa-envelope"
-  noblank: true # open link in current tab
->>>>>>> v7.2.4
 
 - type: rss
   icon: "fas fa-rss"
@@ -32,8 +26,6 @@
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'
 #   url:  ''                  # Fill with your stackoverflow homepage
-<<<<<<< HEAD
-=======
 #
 # - type: bluesky
 #   icon: 'fa-brands fa-bluesky'
@@ -46,4 +38,3 @@
 # - type: threads
 #   icon: 'fa-brands fa-threads'
 #   url: ''                   # Fill with your Threads profile link
->>>>>>> v7.2.4

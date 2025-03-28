@@ -4,7 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-<<<<<<< HEAD
 
 Hey, I'm Reto and welcome to my blog!
 
@@ -17,7 +16,3 @@ Feel free to hold me accountable and encourage me to keep writing if you enjoy w
 Happy reading!
 
 Reto
-=======
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
->>>>>>> v7.2.4

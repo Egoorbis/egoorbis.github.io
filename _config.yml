@@ -9,16 +9,11 @@ theme: jekyll-theme-chirpy
 lang: en
 
 # Change to your timezone › https://kevinnovak.github.io/Time-Zone-Picker
-<<<<<<< HEAD
 timezone: Europe/Zurich
-=======
-timezone:
->>>>>>> v7.2.4
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-<<<<<<< HEAD
 title: vefiu # the main title
 
 tagline: Architecture is based on the three principles of grace/beauty (venustas), stability (firmitas) and utility (utilitas) - vefiu # it will display as the sub-title
@@ -35,43 +30,16 @@ github:
 
 twitter:
   username: egoorbis # change to your twitter username
-=======
-title: Chirpy # the main title
-
-tagline: A text-focused Jekyll theme # it will display as the subtitle
-
-description: >- # used by seo meta and the atom feed
-  A minimal, responsive and feature-rich Jekyll theme for technical writing.
-
-# Fill in the protocol & hostname for your site.
-# E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: ""
-
-github:
-  username: github_username # change to your GitHub username
-
-twitter:
-  username: twitter_username # change to your Twitter username
->>>>>>> v7.2.4
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-<<<<<<< HEAD
   name: Reto
   # email: example@domain.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/egoorbis # change to your twitter homepage
     - https://github.com/egoorbis # change to your github homepage
-=======
-  name: your_full_name
-  email: example@domain.com # change to your email address
-  links:
-    # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your Twitter homepage
-    - https://github.com/username # change to your GitHub homepage
->>>>>>> v7.2.4
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -101,17 +69,9 @@ analytics:
     id: # fill in your Matomo ID
     domain: # fill in your Matomo domain
   cloudflare:
-<<<<<<< HEAD
     id: 7a4eeaa1fd084f57a49ebf6ca3fcb36d # fill in your Cloudflare Web Analytics token
 
 # Pageviews settings
-=======
-    id: # fill in your Cloudflare Web Analytics token
-  fathom:
-    id: # fill in your Fathom Site ID
-
-# Page views settings
->>>>>>> v7.2.4
 pageviews:
   provider: # now only supports 'goatcounter'
 
@@ -123,13 +83,8 @@ pageviews:
 #
 # Available options:
 #
-<<<<<<< HEAD
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
-=======
-#     light — Use the light color scheme
-#     dark — Use the dark color scheme
->>>>>>> v7.2.4
 #
 theme_mode: # [light | dark]
 
@@ -141,11 +96,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-<<<<<<< HEAD
 avatar: "avatar.jpg"
-=======
-avatar:
->>>>>>> v7.2.4
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -155,11 +106,7 @@ social_preview_image: # string, local or CORS resources
 toc: true
 
 comments:
-<<<<<<< HEAD
   # Global switch for the post comment system. Keeping it empty means disabled.
-=======
-  # Global switch for the post-comment system. Keeping it empty means disabled.
->>>>>>> v7.2.4
   provider: # [disqus | utterances | giscus]
   # The provider options are as follows:
   disqus:
@@ -189,15 +136,9 @@ assets:
     env: # [development | production]
 
 pwa:
-<<<<<<< HEAD
   enabled: true # the option for PWA feature (installable)
   cache:
     enabled: true # the option for PWA offline cache
-=======
-  enabled: true # The option for PWA feature (installable)
-  cache:
-    enabled: true # The option for PWA offline cache
->>>>>>> v7.2.4
     # Paths defined here will be excluded from the PWA cache.
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.
@@ -249,13 +190,10 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-<<<<<<< HEAD
   - scope:
       path: assets/js/dist
     values:
       swcache: true
-=======
->>>>>>> v7.2.4
 
 sass:
   style: compressed
@@ -276,14 +214,9 @@ exclude:
   - tools
   - README.md
   - LICENSE
-<<<<<<< HEAD
-  - "*.config.js"
-  - package*.json
-=======
   - purgecss.js
   - rollup.config.js
   - "package*.json"
->>>>>>> v7.2.4
 
 jekyll-archives:
   enabled: [categories, tags]

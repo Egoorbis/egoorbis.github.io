@@ -6,7 +6,6 @@ platforms:
     icon: "fa-brands fa-square-x-twitter"
     link: "https://twitter.com/intent/tweet?text=TITLE&url=URL"
 
-<<<<<<< HEAD
   # - type: Facebook
   #   icon: "fab fa-facebook-square"
   #   link: "https://www.facebook.com/sharer/sharer.php?title=TITLE&u=URL"
@@ -20,21 +19,6 @@ platforms:
   - type: Linkedin
     icon: "fab fa-linkedin"
     link: "https://www.linkedin.com/sharing/share-offsite/?url=URL"
-=======
-  - type: Facebook
-    icon: "fab fa-facebook-square"
-    link: "https://www.facebook.com/sharer/sharer.php?title=TITLE&u=URL"
-
-  - type: Telegram
-    icon: "fab fa-telegram"
-    link: "https://t.me/share/url?url=URL&text=TITLE"
-
-  # Uncomment below if you need to.
-  #
-  # - type: Linkedin
-  #   icon: "fab fa-linkedin"
-  #   link: "https://www.linkedin.com/sharing/share-offsite/?url=URL"
->>>>>>> v7.2.4
   #
   # - type: Weibo
   #   icon: "fab fa-weibo"
@@ -52,8 +36,6 @@ platforms:
   #       link: "https://fosstodon.org/"
   #     - label: photog.social
   #       link: "https://photog.social/"
-<<<<<<< HEAD
-=======
   #
   # - type: Bluesky
   #   icon: "fa-brands fa-bluesky"
@@ -66,4 +48,3 @@ platforms:
   # - type: Threads
   #   icon: "fa-brands fa-square-threads"
   #   link: "https://www.threads.net/intent/post?text=TITLE%20URL"
->>>>>>> v7.2.4
