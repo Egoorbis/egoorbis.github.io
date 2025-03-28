@@ -120,7 +120,7 @@ Let's explore Trivy's versatile options for scanning IaC configurations. I highl
 
 Let's review the step's output to understand the results, which are displayed as follows:
 
-![Run Trivy Infrastructure as Code scan step](posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-pipeline.png)
+![Run Trivy Infrastructure as Code scan step](/assets/img/posts/2025-03-28_terraform-trivy-scan/trivy-pipeline.png)
 
 While Trivy detected issues within our code, the output lacks readability. 
 
@@ -171,7 +171,7 @@ Additionally, we'll configure a second Trivy scan to fail only if any High or Cr
 
 The output of this configuration is presented below:
 
-![Trivy GitHub Summary](posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-github-summary.png)
+![Trivy GitHub Summary](/assets/img/posts/2025-03-28_terraform-trivy-scan/trivy-github-summary.png)
 
 ## Ignoring Specific Issues
 
@@ -196,7 +196,7 @@ Following the authors recommendation I've integrated GitLeaks my workflow to enh
 
 Surprisingly, the official GitLeaks GitHub Action failed to detect the secrets, reporting no issues, despite local testing successfully detecting the password.
 
-![GitLeaks Action](posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-gitleaks-actions.png)
+![GitLeaks Action](/assets/img/posts/2025-03-28_terraform-trivy-scan/trivy-gitleaks-actions.png)
 
  To resolve this discrepancy, I've modified the workflow to manually install GitLeaks, as shown in the following configuration.
 
@@ -235,7 +235,7 @@ Surprisingly, the official GitLeaks GitHub Action failed to detect the secrets, 
 
 As shown in the screenshot below, this time the password was successfully detected.
 
-![GitLeaks Manual](posts/2025/2025-03-28_terraform-trivy-scan/assets/trivy-gitleaks-actions-manual.png)
+![GitLeaks Manual](/assets/img/posts/2025-03-28_terraform-trivy-scan/trivy-gitleaks-actions-manual.png)
 
 Through the implementation of Trivy and GitLeaks in a GitHub Actions workflow, we have now established robust security our Terraform deployment, encompassing both misconfiguration and secret detection.
 
