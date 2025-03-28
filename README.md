@@ -25,6 +25,7 @@ Jekyll site. The following is a list of targets:
 To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
 latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
 
+<<<<<<< HEAD
 ## Prerequisites
 
 Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of
@@ -49,6 +50,15 @@ Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#d
 
 The contents of this repository are automatically updated when new releases are made to the [main repository][chirpy].  
 If you have problems using it, or would like to participate in improving it, please go to the main repository for feedback!
+=======
+## Usage
+
+Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+
+## Contributing
+
+This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+>>>>>>> v7.2.4
 
 ## License
 
@@ -56,6 +66,11 @@ This work is published under [MIT][mit] License.
 
 [gem]: https://rubygems.org/gems/jekyll-theme-chirpy
 [chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
+<<<<<<< HEAD
 [use-template]: https://github.com/cotes2020/chirpy-starter/generate
 [CD]: https://en.wikipedia.org/wiki/Continuous_deployment
 [mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+=======
+[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
+[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+>>>>>>> v7.2.4
