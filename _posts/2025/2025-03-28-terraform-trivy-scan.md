@@ -14,7 +14,7 @@ n this post, you'll learn how to use Trivy in GitHub Actions to scan your Terraf
 
 ## Prerequisites: Setting the Stage
 
-For this tutorial, you'll need a GitHub repository. I'll build upon the setup from my previous blog post, which detailed OIDC and Entra ID authentication for Azure deployments from GitHub Actions. You can find the details [here](https://egoorbis.github.io/2024/2025-01-31-terraform-azure-deployment).
+For this tutorial, you'll need a GitHub repository. I'll build upon the setup from my previous blog post, which detailed OIDC and Entra ID authentication for Azure deployments from GitHub Actions. You can find the details [here](https://blog.vefiu.com/posts/terraform-github-actions/).
 
 TThe files used in this post are available in my blog-data repository:
 * [Terraform Code](https://github.com/Egoorbis/blog-data/tree/main/trivy-scan)
@@ -107,7 +107,7 @@ jobs:
 
 We'll integrate Trivy using the [aquasecurity/trivy-action](https://github.com/aquasecurity/trivy-action). This step is added immediately after the "Code Checkout" to scan the Terraform code before execution.
 
-Let's explore Trivy's versatile options for scanning IaC configurations. I highly recommend experimenting locally to tailor the settings to your specific needs. Trivy offers flexibility, allowing you to define options directly in your pipeline or via a YAML file within your repository. For comprehensive details, consult the Trivy IaC documentation<sup>[2](#sources)</sup> and the Trivy action documentation<sup>[3](#sources)</sup> 
+Let's explore Trivy's versatile options for scanning IaC configurations. I highly recommend experimenting locally to tailor the settings to your specific needs. Trivy offers flexibility, allowing you to define options directly in your pipeline or via a YAML file within your repository. For comprehensive details, consult the Trivy IaC documentation<sup>[3](#sources)</sup> and the Trivy action documentation<sup>[4](#sources)</sup> 
 
 * `scan-type`: Specifies the scan type (fs for filesystem scans).
 * `scan-ref`: Sets the desired Terraform directory - without this Trivy will scan the whole repository.
@@ -183,7 +183,7 @@ For example, as I lack a fixed public IP address, I've chosen to exclude the "AV
 
 During initial Trivy scans, I observed that it failed to detect an intentionally embedded password within the [main.tf](https://github.com/Egoorbis/blog-data/blob/main/trivy-scan/main.tf) file.
 
-This aligns with findings reported in a blog post by **Rooneycloudtech**<sup>[4](#sources)</sup>, which highlighted the same limitation.
+This aligns with findings reported in a blog post by **Rooneycloudtech**<sup>[5](#sources)</sup>, which highlighted the same limitation.
 
 Following the authors recommendation I've integrated GitLeaks my workflow to enhance secret detection, complementing Trivy. Using the official [GitLeaks action](https://github.com/gitleaks/gitleaks-action), the following configuration was used:
 
@@ -245,7 +245,7 @@ Through the implementation of Trivy and GitLeaks in a GitHub Actions workflow, w
 
 2. [GitLeaks](https://gitleaks.io/)
 
-2. [Trivy Infrastructure as Code¶](https://trivy.dev/latest/docs/coverage/iac/)
+2. [Trivy Infrastructure as Code](https://trivy.dev/latest/docs/coverage/iac/)
 
 3. [Trivy Action](https://github.com/aquasecurity/trivy-action)
 
