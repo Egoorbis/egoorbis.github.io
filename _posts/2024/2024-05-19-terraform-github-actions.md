@@ -68,7 +68,7 @@ The next step to enable the login to Azure via OIDC in a GitHub Actions workflow
 
 Below you will find the commands for configuring the Entra application. Again, customize the variables at the beginning of the script that are used to define the name of the Microsoft Entra application and your Azure subscription ID. 
 
-You can either login from your client using ```az login``` or navigate to https://shell.azure.com and use the Cloud Shell.
+You can either login from your client using ```az login``` or navigate to [https://shell.azure.com](https://shell.azure.com) and use the Cloud Shell.
 
 ```shell
 # Declare variables
@@ -172,7 +172,7 @@ Before we start configuring the workflow, we take our outputs from the previous 
 
 ## Configure GitHub Actions secrets
 
-To do this, navigate to https://github.com and select your newly created repository. Go to **Settings**, then under **Security** expand the **Secrets and variables** option and then select **Actions**. You now need to add all secrets as shown below:
+To do this, navigate to [https://github.com](https://github.com) and select your newly created repository. Go to **Settings**, then under **Security** expand the **Secrets and variables** option and then select **Actions**. You now need to add all secrets as shown below:
 
 ![Add secret](/assets/img/posts/2024-05-19-TFonGitHub/ghNewSecret.png)
 
@@ -274,10 +274,10 @@ jobs:
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      BACKEND_RG: ${{ secrets.BACKEND_RESOURCE_GROUP}}
-      BACKEND_SG: ${{ secrets.BACKEND_STORAGE_ACCOUNT}}
-      BACKEND_CONTAINER: ${{ secrets.BACKEND_CONTAINER_NAME}}
-      BACKEND_KEY: ${{ secrets.BACKEND_KEY}}
+      BACKEND_RESOURCE_GROUP: ${{ secrets.BACKEND_RESOURCE_GROUP }}
+      BACKEND_STORAGE_ACCOUNT: ${{ secrets.BACKEND_STORAGE_ACCOUNT }}
+      BACKEND_CONTAINER_NAME: ${{ secrets.BACKEND_CONTAINER_NAME }}
+      BACKEND_KEY: ${{ secrets.BACKEND_KEY }}
 
     steps:
       - name: 'Code Checkout'
@@ -294,9 +294,9 @@ jobs:
         id: init
         run: |
           terraform init \
-            -backend-config="resource_group_name=$BACKEND_RG" \
-            -backend-config="storage_account_name=$BACKEND_SG" \
-            -backend-config="container_name=$BACKEND_CONTAINER" \
+            -backend-config="resource_group_name=$BACKEND_RESOURCE_GROUP" \
+            -backend-config="storage_account_name=$BACKEND_STORAGE_ACCOUNT" \
+            -backend-config="container_name=$BACKEND_CONTAINER_NAME" \
             -backend-config="key=$BACKEND_KEY" \
       
       - name: 'Terraform Plan'
