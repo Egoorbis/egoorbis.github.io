@@ -1,3 +1,14 @@
 {
-  "recommendations": ["ms-vscode-remote.remote-containers"]
+  "recommendations": [
+    "ms-vscode-remote.remote-containers",
+    "killalau.vscode-liquid-snippets",
+    "Shopify.theme-check-vscode",
+    "timonwong.shellcheck",
+    "mkhl.shfmt",
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
+    "yzhang.markdown-all-in-one",
+    "mhutchie.git-graph"
+  ]
 }

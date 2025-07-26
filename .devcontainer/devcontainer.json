@@ -1,6 +1,6 @@
 {
   "name": "Jekyll",
-  "image": "mcr.microsoft.com/devcontainers/jekyll:2-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/jekyll:2-bookworm",
   "onCreateCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "customizations": {
