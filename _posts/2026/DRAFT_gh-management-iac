@@ -1,0 +1,72 @@
+---
+title: Fortify Your Terraform - Scanning IaC with Trivy and GitLeaks on GitHub Actions
+date: 2025-03-28 20:30:SS +0200
+categories: [Infrastructure as Code, Terraform]
+tags: [terraform, vulnerability-management, github actions, trivy, giteaks]
+description: Secure your Terraform deployments by catching vulnerabilities early. Learn how to integrate Trivy and GitLeaks into your GitHub Actions workflow, enhancing your IaC security posture.
+---
+
+# The Engineer’s Blueprint: Automating a Professional GitHub Portfolio with Terraform & Azure OIDC
+
+**Date:** February 15, 2026
+**Category:** DevSecOps / Infrastructure as Code
+**Reading Time:** 8 minutes
+
+---
+
+## 📖 The Problem: The "Snowflake" Portfolio
+As IT professionals, we often build incredible lab environments but neglect the "front door" of our careers: our GitHub profiles. Most portfolios are a collection of manually created repositories with inconsistent security settings, missing documentation, and lingering Personal Access Tokens (PATs).
+
+I decided to treat my GitHub profile like a production environment. In this post, I detail how I built a **Meta-Management Repository** using Terraform and Azure OIDC to automate my entire GitHub presence with a security-first mindset.
+
+---
+
+## 🏗️ The Architecture: Passwordless Governance
+To achieve true automation, I moved away from manual clicks and static secrets. My setup relies on a "Meta-Repo" that acts as the central engine for all other projects.
+
+### 🔐 1. GitHub Apps over PATs
+I replaced Personal Access Tokens with a **GitHub App**. Unlike tokens, Apps offer fine-grained permissions (Principal of Least Privilege) and use short-lived tokens generated via a private key. This ensures that even if a session is compromised, the window of risk is minimal.
+
+### ☁️ 2. Azure OIDC & Entra ID
+For my CI/CD pipeline, I implemented **OpenID Connect (OIDC)**. GitHub Actions requests a short-lived access token from Azure Entra ID based on a Federated Identity.
+* **No Client Secrets:** No passwords to rotate or leak.
+* **Identity-Driven:** Access is tied specifically to my repository and branch.
+
+
+
+### 📦 3. Remote State Management
+The Terraform state is stored in an **Azure Storage Account**. Using the `azurerm` backend with `use_azuread_auth = true`, I ensure that the state—which often contains metadata about my infrastructure—is encrypted at rest and accessible only via Entra ID roles.
+
+---
+
+## 🛠️ The "Gold Standard" Repository Module
+Instead of creating repositories from scratch, I built a reusable Terraform module. Every repository I publish now automatically inherits a professional security baseline.
+
+```hcl
+# Snippet from my modules/repository/main.tf
+resource "github_repository" "this" {
+  name        = var.repo_name
+  visibility  = "public"
+  auto_init   = true
+
+  # Security Hardening
+  vulnerability_alerts = true
+  security_and_analysis {
+    secret_scanning {
+      status = "enabled"
+    }
+    secret_scanning_push_protection {
+      status = "enabled"
+    }
+  }
+
+  # Cleanliness & Maintenance
+  delete_branch_on_merge = true
+  has_issues             = true
+}
+
+
+
+
+
+
