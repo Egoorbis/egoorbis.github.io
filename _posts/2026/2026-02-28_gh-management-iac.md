@@ -11,13 +11,12 @@ description: "Automating GitHub repository creation and Azure OIDC integration u
 ## 📖 The Problem: The "Snowflake" Portfolio
 As an IT professional, I love setting up lab environments, testing new features, and experimenting with new tools. Until now, however, I have primarily done this locally on my desktop PC. Whenever I did decide to set up a remote repository, it usually resembled a "snowflake": unique, delicate, and impossible to replicate exactly.
 
-I have decided to change that and treat my GitHub profile like a production environment from now on. This post describes the first step: using Terraform to build a **GitHub Project Vending Machine**. The goal is to create consistent GitHub repositories for new projects and build clean, automated Workload Identity Federation (OIDC) integrations into my Azure environment from the very start.
+I have decided to change that and treat my GitHub profile like more like a production environment from now on. This post describes the first step: using Terraform to build a **GitHub Project Vending Machine**. The goal is to create consistent GitHub repositories for new projects and build clean, automated Workload Identity Federation (OIDC) integrations into my Azure environment from the very start.
 
 ---
 
 ## 🛠️ The Architecture: Project Vending Machine
-My setup uses a central "Meta-Repo" to govern my entire portfolio.
-
+My setup uses a central "Meta-Repo" to govern my entire portfolio. 
 
 When I want to start a new project, my Terraform engine performs five key actions:
 1.  **Creates the GitHub Repository** with a security-hardened baseline.
@@ -28,7 +27,7 @@ When I want to start a new project, my Terraform engine performs five key action
 
 ---
 
-## ⚠️ The Foundation: Prerequisites
+## 🏗️ The Foundation: Prerequisites
 To successfully set up the project vending machine, we need:
 * A GitHub Repository, a Terraform Backend, and Azure OIDC Integration.
 * A GitHub Personal Access Token (PAT).
@@ -41,7 +40,7 @@ We start by manually creating one final repository: the Project Vending Machine.
 To vend new projects, our Terraform deployments must be authorized to act on our GitHub profile. My initial aim was to avoid using a PAT and rely on GitHub Apps. However, I learned the hard way that **GitHub Apps cannot be used with personal GitHub accounts for repository creation** — they only support organizations.
 
 The fallback is a **Fine-grained Personal Access Token (PAT)**.
-1.  Navigate to **Settings > Developer Settings > Personal Access Tokens > Fine-grained tokens**.
+1.  On GitHub navigate to **Settings > Developer Settings > Personal Access Tokens > Fine-grained tokens**.
 2.  Grant the following permissions to **all repositories**:
     * **Administration:** Read and write
     * **Contents:** Read and write
@@ -56,14 +55,17 @@ Create the token and add it as a secret to your project vending repository. Afte
 
 
 ### Step 3: Entra ID and Azure RBAC Permissions
-To allow the Service Principal created under step 1 to vend identities in Entra ID and assign roles in Azure, it needs elevated privileges:
 
-| Scope                    | Role Required                 | Why?                                                                                    |
-| :----------------------- | :---------------------------- | :-------------------------------------------------------------------------------------- |
-| **Entra ID**             | **Application Administrator** | To create App Registrations and configure Federated Credentials[cite: 26, 30].          |
-| **Azure (Subscription)** | **User Access Administrator** | To assign the 'Contributor' role to the newly created project identities[cite: 28, 29]. |
+To allow the Service Principal created under step 1 to vend identities in Entra ID and assign roles in Azure, it needs additional privileges:
+
+| Scope                                                   | Role Required                 | Why?                                                                                 |
+| :------------------------------------------------------ | :---------------------------- | :----------------------------------------------------------------------------------- |
+| **Entra ID**                                            | **Application Administrator** | To create App Registrations (Service Principals) and configure Federated Credentials |
+| **Azure RBAC (e. g. Management Group or Subscription)** | **User Access Administrator** | To create Azure role assignment to the vended projects.                              |
 
 > **Tip:** While `Application Developer` is often enough to create an SPN, you will need `Application Administrator` to "Patch" existing objects and handle full lifecycle management during Terraform updates.
+
+After assigning these permissions, we are ready to setup the necessary code for the Project Vending Machine.
 
 ---
 
@@ -74,7 +76,7 @@ I have structured the Project Vending Machine repository to separate core logic 
 ```text
 gh-project-vending-machine/
 ├── .github/workflows/
-│   └── vend-project.yml     # The CI/CD Pipeline
+│   └── vend-project.yml       # The CI/CD Pipeline
 ├── modules/
 │   ├── entra-spn/             # Module: Vends SPNs, OIDC Trust and Azure permissions
 │   │   ├── main.tf
@@ -94,15 +96,17 @@ gh-project-vending-machine/
 
 ## 🔍 Structure Breakdown
 * `modules/entra-spn`: I use this module to create Azure Service Principals (SPNs). It is decoupled from GitHub, allowing us to technically vend identities for other platforms in the future.
-* `modules/repository`: This is the core module for creating projects in GitHub. It does not just create a repository; it "decorates" it with secrets provided by the Identity module and enforces a security baseline, including Secret Scanning and Branch Protection.
+* `modules/repository`: This is the core module for creating projects in GitHub. It does not just create a repository; it "decorates" it with secrets provided by the entra-spn module and enforces a security baseline, including Secret Scanning and Branch Protection.
 * `projects/`: This acts as the Orchestration Layer, where we vend our projects. By keeping this separate from the modules, we can in future also manage different "stacks" (e.g., a production folder for blog projects and a lab folder for temporary experiments) while using the same underlying logic.
 
-By modularizing the Identity and Repository logic, adding a new project to my portfolio requires zero "copy-pasting" of code. I simply declare a new module block in `projects/main.tf`, and the entire project skeleton — from Entra ID to GitHub Secrets — is provisioned automatically. This modular approach ensures consistent settings across environments and guarantees that every project receives its own `.tfstate` file in Azure, reducing the blast radius of any potential state corruption.
+By modularizing the entra-spn and repository logic, adding a new project to my portfolio requires zero "copy-pasting" of code. I simply declare a new module block in `projects/main.tf`, and the entire project skeleton — from Entra ID to GitHub Secrets — is provisioned automatically. 
+
+This modular approach ensures consistent settings across environments and guarantees that every project receives its own `.tfstate` file in Azure, reducing the blast radius of any potential state corruption.
 
 ### 🔗 Explore the Code
 
 You can view the full "Project Vending Machine" repository here:
-👉 **[https://github.com/Egoorbis/gh-project-vending-machine]**
+👉 **[gh-project-vending-machine](https://github.com/Egoorbis/gh-project-vending-machine)**
 
 ## 👨‍💻 Usage: Deploying a Repository
 
@@ -133,7 +137,7 @@ module "test_repo" {
 }
 ```
 
-Once we commit these changes to the main branch, our GitHub Actions workflow (`vend-project.yml`) takes over. This workflow is the "heart" of the vending machine.
+Once we commit these changes to the main branch, our GitHub Actions workflow (`vend-project.yml`) takes over. This workflow is the "heart" of the project vending machine.
 
 ```YAML
 name: "Vend new Project"
@@ -223,9 +227,11 @@ jobs:
 
 By combining this workflow with our modular Terraform code, we’ve moved from manually clicking through the UI to a fully automated Infrastructure-as-Code pipeline.
 
-As a result we have a new project repository that has all the secrets we need to deploy code to Azure.
+As a result we have a new project repository.
 
 ![New repository](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-6.png)
+
+And all the secrets we need to deploy code to Azure from the new repository are automatically added
 
 ![New repository - actions secrets](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-7.png)
 ---
