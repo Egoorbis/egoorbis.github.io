@@ -37,7 +37,7 @@ To successfully set up the project vending machine, we need:
 We start by manually creating one final repository: the Project Vending Machine. This will be the last repository you ever create via the UI. To set up the initial Terraform backend and Azure OIDC integration for this meta-repo, you can follow my previous [blog post](https://blog.vefiu.com/posts/terraform-github-actions/).
 
 ### Step 2: GitHub Permissions
-To vend new projects, our Terraform deployments must be authorized to act on our GitHub profile. My initial aim was to avoid using a PAT and rely on GitHub Apps. However, I learned the hard way that **GitHub Apps cannot be used with personal GitHub accounts for repository creation** — they only support organizations.
+To vend new projects, our Terraform deployments must be authorized to act on our GitHub profile. The ideal approach would be to use GitHub Apps, which provide fine-grained permissions and avoid long-lived credentials. However, GitHub Apps are only supported for repository creation on organization accounts, not personal ones.
 
 The fallback is a **Fine-grained Personal Access Token (PAT)**.
 1.  On GitHub navigate to **Settings > Developer Settings > Personal Access Tokens > Fine-grained tokens**.
@@ -106,7 +106,7 @@ This modular approach ensures consistent settings across environments and guaran
 ### 🔗 Explore the Code
 
 You can view the full "Project Vending Machine" repository here:
-👉 **[gh-project-vending-machine](https://github.com/Egoorbis/gh-project-vending-machine)**
+👉 **[gh-project-vending-machine](https://github.com/Egoorbis/gh-project-vending-machine/tree/1.0.0)**
 
 ## 👨‍💻 Usage: Deploying a Repository
 
@@ -219,13 +219,12 @@ jobs:
 ```
 
 **Key Features of the Workflow:**
-* *Zero-Trust Authentication*: The workflow uses `permissions: id-token: write` to request a short-lived JWT token from Azure via OIDC. This means we don't need to store any long-lived Azure Client Secrets in GitHub.
-* *GitHub Secret-to-Variable Mapping*: A critical security feature is how we handle sensitive data. We map GitHub Secrets directly to Terraform variables using the `TF_VAR_` prefix (e.g., `TF_VAR_github_token: ${{ secrets.GH_PAT }}`). This allows Terraform to ingest credentials securely at runtime without them ever being hardcoded in our code.
-* *Dynamic Backend Configuration*: We also don't hardcode our Terraform state location. The `terraform init` step dynamically injects the resource group, storage account, and container details using GitHub Secrets.
-* *Plan & Review*: On a Pull Request, the workflow runs a `terraform plan` and uploads the artifact. This allows us to review exactly what the vending machine will create before any changes are made.
-* *Automated Apply*: Once the code is merged into main, the workflow executes `terraform apply`, turning our code into live infrastructure in seconds.
+* **Zero-Trust Authentication**: The workflow uses `permissions: id-token: write` to request a short-lived JWT token from Azure via OIDC. Long-lived credentials are never stored in GitHub Secrets.
+* **Secure Variable Injection**: GitHub Secrets are mapped directly to Terraform variables using the `TF_VAR_` prefix (e.g., `TF_VAR_github_token: ${{ secrets.GH_PAT }}`). This ensures credentials or other sensitive values are injected at runtime without being hardcoded in the code.
+* **Plan & Review Workflow**: On Pull Requests, the workflow executes `terraform plan` and uploads the artifact. This allows human review of all infrastructure changes before they are applied.
+* **Automated Deployment**: Once code is merged to main, the workflow executes `terraform apply`, provisioning infrastructure in seconds.
 
-By combining this workflow with our modular Terraform code, we’ve moved from manually clicking through the UI to a fully automated Infrastructure-as-Code pipeline.
+This workflow transforms manual UI-based provisioning into a fully automated, auditable Infrastructure-as-Code pipeline.
 
 As a result we have a new project repository.
 
@@ -237,7 +236,7 @@ And all the secrets we need to deploy code to Azure from the new repository are 
 ---
 
 ## 🚀 What’s Next? (Teaser: Part 2)
-Building the infrastructure is only half the battle. How do we ensure that every new repository *immediately* knows how to run its own CI/CD?
+Building the infrastructure is only half the battle. How do we ensure that every new repository immediately knows how to run its own CI/CD pipeline?
 
-In **Part 2**, we will dive into **Workflow Templates**. I'll show you how to use Terraform to "bootstrap" GitHub Action YAML files into new repositories so they can start deploying code to Azure the second they are created.
+In **Part 2** of this series, I'll explore **Workflow Templates** to use Terraform to bootstrap GitHub Action YAML files into new repositories, enabling them to deploy code to Azure from the moment they're created.
 
