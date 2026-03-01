@@ -47,11 +47,11 @@ The fallback is a **Fine-grained Personal Access Token (PAT)**.
     * **Secrets:** Read and write
     * *(Metadata permissions are added automatically)*
 
-![Actions secrets](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-2.png)
+![Actions secrets](/assets/img/posts/2026-02-github-management-iac/ghm-personal-2.png)
 
 Create the token and add it as a secret to your project vending repository. After step 1 and 2 you should now have the following secrets in your project vending repository:
 
-![Actions secrets](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-5.png)
+![Actions secrets](/assets/img/posts/2026-02-github-management-iac/ghm-personal-5.png)
 
 
 ### Step 3: Entra ID and Azure RBAC Permissions
@@ -228,11 +228,11 @@ This workflow transforms manual UI-based provisioning into a fully automated, au
 
 As a result we have a new project repository.
 
-![New repository](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-6.png)
+![New repository](/assets/img/posts/2026-02-github-management-iac/ghm-personal-6.png)
 
 And all the secrets we need to deploy code to Azure from the new repository are automatically added
 
-![New repository - actions secrets](../../assets/img/posts/2026-02-github-management-iac/ghm-personal-7.png)
+![New repository - actions secrets](/assets/img/posts/2026-02-github-management-iac/ghm-personal-7.png)
 ---
 
 ## 🚀 What’s Next? (Teaser: Part 2)
