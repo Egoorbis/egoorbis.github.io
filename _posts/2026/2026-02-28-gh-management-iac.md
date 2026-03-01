@@ -1,6 +1,6 @@
 ---
 title: "The Engineer’s Blueprint Part I: GitHub Project Vending Machine"
-date: 2026-02-28 20:30:00 +0200
+date: 2026-02-28 20:30:SS +0200
 categories: [Infrastructure as Code, DevSecOps]
 tags: [terraform, github, workload identity, azure]
 description: "Automating GitHub repository creation and Azure OIDC integration using a Terraform-based 'GitHub Project Vending Machine'."
