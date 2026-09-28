@@ -42,7 +42,8 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3'
+          # Version comes from .ruby-version (kept up to date by Renovate)
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Build site

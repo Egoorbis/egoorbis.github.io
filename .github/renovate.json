@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "timezone": "Europe/Zurich",
+  "schedule": ["before 6am on monday"],
+  "prConcurrentLimit": 5,
+  "labels": ["dependencies"],
+  "git-submodules": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Gemfile.lock is not committed, so bump the Gemfile range itself (e.g. ~> 7.4 -> ~> 7.6)",
+      "matchManagers": ["bundler"],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Group the Chirpy theme with its static assets submodule",
+      "groupName": "Chirpy theme",
+      "matchPackageNames": [
+        "jekyll-theme-chirpy",
+        "https://github.com/cotes2020/chirpy-static-assets.git"
+      ]
+    },
+    {
+      "description": "jekyll-theme-chirpy requires Ruby ~> 3.1, so stay on Ruby 3.x",
+      "matchManagers": ["ruby-version"],
+      "matchPackageNames": ["ruby"],
+      "allowedVersions": "< 4.0.0"
+    },
+    {
+      "description": "Group GitHub Actions minor/patch updates into one PR",
+      "groupName": "GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest"]
+    },
+    {
+      "description": "Major theme updates need a manual look at the upstream changelog",
+      "matchPackageNames": ["jekyll-theme-chirpy"],
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
