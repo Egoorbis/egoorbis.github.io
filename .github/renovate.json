@@ -14,6 +14,12 @@
   },
   "packageRules": [
     {
+      "description": "Windows-only gems from the Chirpy starter; not used in CI and updated with the starter",
+      "matchManagers": ["bundler"],
+      "matchPackageNames": ["tzinfo", "tzinfo-data", "wdm"],
+      "enabled": false
+    },
+    {
       "description": "Gemfile.lock is not committed, so bump the Gemfile range itself (e.g. ~> 7.4 -> ~> 7.6)",
       "matchManagers": ["bundler"],
       "rangeStrategy": "bump"
